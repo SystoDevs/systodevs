@@ -1,1 +1,507 @@
-<h1>Systodevs</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Systo Devs — Life Is Too Short For Ordinary Apps</title>
+<meta name="description" content="Systo Devs is an independent Android studio building small, useful, well-crafted apps — quotes, trackers, tools and games — published on Google Play.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #12151c;
+    --bg-soft: #171b24;
+    --surface: #1c212c;
+    --surface-line: #2a3140;
+    --peg: #3a4356;
+    --text: #f2efe6;
+    --text-dim: #a8afbd;
+    --text-dimmer: #6b7385;
+    --amber: #ffb238;
+    --teal: #37d6c4;
+    --green: #7bd88f;
+    --sky: #5ac8fa;
+    --pink: #ff5da2;
+    --violet: #b98cff;
+    --coral: #ff6b5b;
+    --rose: #ff8fa3;
+    --radius: 14px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 12% -10%, rgba(255,178,56,0.10), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 90% 10%, rgba(55,214,196,0.08), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter', system-ui, sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Bricolage Grotesque', system-ui, sans-serif;
+    margin:0;
+    letter-spacing:-0.02em;
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(18,21,28,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--surface-line);
+  }
+  .headbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 0;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Bricolage Grotesque'; font-weight:700; font-size:1.05rem;}
+  .brand-mark{
+    width:32px; height:32px; border-radius:9px;
+    background:linear-gradient(145deg, var(--amber), var(--coral));
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px; font-weight:800; color:#14171f;
+  }
+  .headbar nav{display:flex; gap:26px; font-size:0.92rem; color:var(--text-dim);}
+  .headbar nav a{text-decoration:none; transition:color .15s;}
+  .headbar nav a:hover{color:var(--amber);}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:10px 18px; border-radius:999px;
+    font-size:0.9rem; font-weight:600;
+    text-decoration:none; border:1px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn-amber{background:var(--amber); color:#161307;}
+  .btn-amber:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(255,178,56,0.25);}
+  .btn-ghost{border-color:var(--surface-line); color:var(--text);}
+  .btn-ghost:hover{border-color:var(--amber); color:var(--amber);}
+
+  /* ---------- hero ---------- */
+  .hero{padding:96px 0 64px; position:relative;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono'; font-size:0.78rem; letter-spacing:0.06em;
+    color:var(--teal); background:rgba(55,214,196,0.08);
+    border:1px solid rgba(55,214,196,0.25);
+    padding:6px 12px; border-radius:999px; margin-bottom:26px;
+  }
+  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--teal); animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+  .hero h1{
+    font-size:clamp(2.6rem, 6vw, 4.6rem);
+    font-weight:700;
+    line-height:1.04;
+    max-width:15ch;
+  }
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(100deg, var(--amber), var(--coral) 70%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.lede{
+    margin-top:24px; max-width:52ch;
+    font-size:1.12rem; color:var(--text-dim);
+  }
+  .hero-cta{display:flex; gap:14px; margin-top:36px; flex-wrap:wrap;}
+  .hero-stats{
+    display:flex; gap:36px; margin-top:64px; flex-wrap:wrap;
+    padding-top:32px; border-top:1px solid var(--surface-line);
+  }
+  .stat-num{font-family:'Bricolage Grotesque'; font-size:2rem; font-weight:700; color:var(--amber);}
+  .stat-label{font-size:0.85rem; color:var(--text-dimmer);}
+
+  /* ---------- about strip ---------- */
+  .about{padding:20px 0 72px;}
+  .about-card{
+    background:var(--surface);
+    border:1px solid var(--surface-line);
+    border-radius:var(--radius);
+    padding:36px;
+    display:grid; grid-template-columns:auto 1fr; gap:28px; align-items:center;
+  }
+  .about-avatar{
+    width:64px; height:64px; border-radius:50%;
+    background:linear-gradient(145deg, var(--teal), var(--sky));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Bricolage Grotesque'; font-weight:700; font-size:1.4rem; color:#0e1420;
+    flex-shrink:0;
+  }
+  .about p{margin:0; color:var(--text-dim); font-size:1rem;}
+  .about strong{color:var(--text);}
+
+  /* ---------- section heading ---------- */
+  .section-head{padding:0 0 8px;}
+  .section-head .tag{
+    font-family:'JetBrains Mono'; font-size:0.78rem; color:var(--text-dimmer);
+    letter-spacing:0.08em; text-transform:uppercase;
+  }
+  .section-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem); margin-top:10px;}
+  .section-head p{color:var(--text-dim); max-width:56ch; margin-top:12px;}
+
+  /* ---------- pegboard grid ---------- */
+  .pegboard{
+    padding:48px 0 40px;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.045) 1.4px, transparent 1.4px);
+    background-size:26px 26px;
+    border-radius:24px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(268px, 1fr));
+    gap:26px;
+    margin-top:36px;
+  }
+  .card{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--surface-line);
+    border-radius:var(--radius);
+    padding:26px 22px 22px;
+    text-decoration:none;
+    color:var(--text);
+    transition:transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+    transform:rotate(var(--tilt, 0deg));
+  }
+  .card:nth-child(3n+1){--tilt:-0.6deg;}
+  .card:nth-child(3n+2){--tilt:0.4deg;}
+  .card:nth-child(3n+3){--tilt:-0.3deg;}
+  .card:hover{
+    transform:rotate(0deg) translateY(-6px);
+    border-color:var(--card-accent, var(--amber));
+    box-shadow:0 18px 34px rgba(0,0,0,0.35);
+  }
+  .card::before{
+    content:"";
+    position:absolute; top:-7px; left:26px;
+    width:14px; height:14px; border-radius:50%;
+    background:var(--peg);
+    border:3px solid var(--bg);
+    box-shadow:0 3px 6px rgba(0,0,0,0.4);
+  }
+  .card-top{display:flex; align-items:flex-start; gap:14px;}
+  .card-icon{
+    width:56px; height:56px; border-radius:14px; overflow:hidden;
+    flex-shrink:0; border:1px solid var(--surface-line);
+    background:var(--bg-soft);
+  }
+  .card-icon img{width:100%; height:100%; object-fit:cover;}
+  .card-title{font-family:'Bricolage Grotesque'; font-weight:700; font-size:1.05rem; line-height:1.25;}
+  .card-cat{
+    display:inline-block; margin-top:6px;
+    font-family:'JetBrains Mono'; font-size:0.7rem; letter-spacing:0.05em; text-transform:uppercase;
+    color:var(--card-accent, var(--amber));
+  }
+  .card-desc{
+    margin-top:16px; font-size:0.88rem; color:var(--text-dim);
+    min-height:58px;
+  }
+  .card-foot{
+    margin-top:18px; padding-top:14px;
+    border-top:1px dashed var(--surface-line);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .card-rating{font-size:0.82rem; color:var(--text-dimmer); font-family:'JetBrains Mono';}
+  .card-rating .star{color:var(--amber);}
+  .card-install{
+    font-size:0.8rem; font-weight:600; color:var(--card-accent, var(--amber));
+    display:flex; align-items:center; gap:4px;
+  }
+  .card-install .arrow{transition:transform .15s;}
+  .card:hover .card-install .arrow{transform:translateX(3px);}
+
+  /* ---------- footer ---------- */
+  footer{
+    margin-top:90px; padding:56px 0 40px;
+    border-top:1px solid var(--surface-line);
+  }
+  .foot-grid{display:flex; justify-content:space-between; gap:32px; flex-wrap:wrap;}
+  .foot-brand p{color:var(--text-dimmer); font-size:0.9rem; max-width:36ch; margin-top:10px;}
+  .foot-links{display:flex; gap:48px; flex-wrap:wrap;}
+  .foot-col h4{
+    font-family:'JetBrains Mono'; font-size:0.75rem; color:var(--text-dimmer);
+    text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px; font-weight:500;
+  }
+  .foot-col a{
+    display:block; margin-bottom:10px; font-size:0.9rem; color:var(--text-dim);
+    text-decoration:none;
+  }
+  .foot-col a:hover{color:var(--amber);}
+  .foot-bottom{
+    margin-top:48px; padding-top:24px; border-top:1px solid var(--surface-line);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+    font-size:0.82rem; color:var(--text-dimmer);
+  }
+
+  @media (max-width:640px){
+    .about-card{grid-template-columns:1fr; text-align:left;}
+    .headbar nav{display:none;}
+    .hero{padding:64px 0 40px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .card, .btn, .eyebrow .dot{transition:none; animation:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap headbar">
+    <div class="brand">
+      <span class="brand-mark"><img src="logo.png" alt="Systo Devs icon" loading="lazy"></span>
+      Systo Devs
+    </div>
+    <nav>
+      <a href="#apps">Apps</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-amber" href="https://play.google.com/store/apps/dev?id=8543607612082086803" target="_blank" rel="noopener">Google Play ↗</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <span class="eyebrow"><span class="dot"></span>10 apps live on Google Play</span>
+    <h1>Life is too<br>short for <em>ordinary</em><br>apps.</h1>
+    <p class="lede">Systo Devs is a one-person Android studio building small, sharp, useful apps — quote makers, trackers, learning tools and a hex-shaped puzzle game. No bloat, no clutter, just apps that do their one job well.</p>
+    <div class="hero-cta">
+      <a class="btn btn-amber" href="#apps">Browse the toolbox</a>
+      <a class="btn btn-ghost" href="mailto:systodevs@gmail.com">Get in touch</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">10</div>
+        <div class="stat-label">apps published</div>
+      </div>
+      <div>
+        <div class="stat-num">50K+</div>
+        <div class="stat-label">multiplication table installs</div>
+      </div>
+      <div>
+        <div class="stat-num">8</div>
+        <div class="stat-label">categories covered</div>
+      </div>
+      <div>
+        <div class="stat-num">🇵🇰</div>
+        <div class="stat-label">built in Pakistan</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about wrap" id="about">
+    <div class="about-card">
+      <div class="about-avatar">S</div>
+      <p><strong>Systo Devs</strong> is run by Saqib — a computer science teacher by day and an independent Android developer by night. Every app on this page was designed, built and shipped solo: from a 20,000-quote offline library to a due-date calculator to a fast-paced hexagon puzzle. The goal is always the same — small tools that respect your time and your storage.</p>
+    </div>
+  </section>
+
+  <section class="pegboard wrap" id="apps">
+    <div class="section-head">
+      <div class="tag">// the toolbox</div>
+      <h2>Ten apps, each doing one thing well</h2>
+      <p>Tap any tile to open it on Google Play. Every icon links straight to the listing — no detours.</p>
+    </div>
+
+    <div class="grid">
+
+      <a class="card" style="--card-accent:var(--coral)" href="https://play.google.com/store/apps/details?id=com.systodevs.textonphotos.customqoutecreator" target="_blank" rel="noopener">
+        <div class="card-top">
+          <div class="card-icon"><img src="https://play-lh.googleusercontent.com/uQCK4-KXjNIFj8coxXQl8nTDGpv8FXCLc_WQjlp7uUkgj2uBEpY78txcFL6njID-T4JxYIJbdQHNdyb9XRLI=w120" alt="Quotes Creator icon" loading="lazy"></div>
+          <div>
+            <div class="card-title">Quotes Creator – Quote Maker</div>
+            <span class="card-cat">Photography</span>
+          </div>
+        </div>
+        <p class="card-desc">Turn any photo into a quote poster — 10,000+ ready quotes, custom fonts, stickers and backgrounds.</p>
+        <div class="card-foot">
+          <span class="card-rating">Contains ads</span>
+          <span class="card-install">Install <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a class="card" style="--card-accent:var(--rose)" href="https://play.google.com/store/apps/details?id=com.systodevs.tracker" target="_blank" rel="noopener">
+        <div class="card-top">
+          <div class="card-icon"><img src="https://play-lh.googleusercontent.com/ulsm3MNOrthSxx2773cJ75VwOSapZIyZR5KczRjx2LIChPXKC164KdsYmhgOOZnQPyf1I4RFyNpnj_y5B6TIeVM=w120" alt="Pregnancy Tracker icon" loading="lazy"></div>
+          <div>
+            <div class="card-title">Pregnancy Tracker – Due Date</div>
+            <span class="card-cat">Parenting</span>
+          </div>
+        </div>
+        <p class="card-desc">Track trimesters, calculate your due date and follow your baby's growth week by week.</p>
+        <div class="card-foot">
+          <span class="card-rating">com.systodevs.tracker</span>
+          <span class="card-install">Install <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a class="card" style="--card-accent:var(--amber)" href="https://play.google.com/store/apps/details?id=com.systodevs.mathematics" target="_blank" rel="noopener">
+        <div class="card-top">
+          <div class="card-icon"><img src="https://play-lh.googleusercontent.com/o4xhRvKe7nvfYzlEvdA5Dn9ns2MkS4mthM67r8C4N3hEMLNIvCKId4Ldcyj0ADVJMUH-lgO5P0mlh6SmVyDodw=w120" alt="Maths Time icon" loading="lazy"></div>
+          <div>
+            <div class="card-title">Maths Time</div>
+            <span class="card-cat">Tools</span>
+          </div>
+        </div>
+        <p class="card-desc">Fun math puzzles and quizzes covering addition to powers, with 30 levels and a duel mode.</p>
+        <div class="card-foot">
+          <span class="card-rating">com.systodevs.mathematics</span>
+          <span class="card-install">Install <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a class="card" style="--card-accent:var(--green)" href="https://play.google.com/store/apps/details?id=com.systodevs.budgettracker" target="_blank" rel="noopener">
+        <div class="card-top">
+          <div class="card-icon"><img src="https://play-lh.googleusercontent.com/uO0zE7KA6co4qkVVCeh5CSkXaE0auV6DhiaiOoVEhDZJgxxVjQ7eGX6kYIeRNKPIPbkU2c0c28k8KTL2KSY5Oxk=w120" alt="Budget Tracker icon" loading="lazy"></div>
+          <div>
+            <div class="card-title">Budget Tracker &amp; Money Manager</div>
+            <span class="card-cat">Finance</span>
+          </div>
+        </div>
+        <p class="card-desc">Track expenses and income, set budget limits, get bill reminders and see spending reports.</p>
+        <div class="card-foot">
+          <span class="card-rating">com.systodevs.budgettracker</span>
+          <span class="card-install">Install <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a class="card" style="--card-accent:var(--sky)" href="https://play.google.com/store/apps/details?id=com.systodevs.minimaltodo" target="_blank" rel="noopener">
+        <div class="card-top">
+          <div class="card-icon"><img src="https://play-lh.googleusercontent.com/QWOjmVcPN1V2FAjbsXTvQHADlPI5jVZX9Vur1N92JinRdzWAdWspl6Ju7XldY3fpqzvLaDZZU03aYqPQrd4kJik=w120" alt="Minimal ToDo icon" loading="lazy"></div>
+          <div>
+            <div class="card-title">Minimal ToDo || To-Do Tasks</div>
+            <span class="card-cat">Productivity</span>
+          </div>
+        </div>
+        <p class="card-desc">Clean, distraction-free task lists with reminders, shared lists and offline sync across devices.</p>
+        <div class="card-foot">
+          <span class="card-rating">com.systodevs.minimaltodo</span>
+          <span class="card-install">Install <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a class="card" style="--card-accent:var(--teal)" href="https://play.google.com/store/apps/details?id=com.systodevs.learn_multiplication_table" target="_blank" rel="noopener">
+        <div class="card-top">
+          <div class="card-icon"><img src="https://play-lh.googleusercontent.com/q6_SKMrGK9QL56HkigNU09tE4kqqWtZxfjdPNbNVbLOLoLRk-78dMN9i5q2StUdbqSyIhCPKz7-gU_xclWQz=w120" alt="Multiplication Table icon" loading="lazy"></div>
+          <div>
+            <div class="card-title">Multiplication Table – Times</div>
+            <span class="card-cat">Education</span>
+          </div>
+        </div>
+        <p class="card-desc">Learn times tables with audio dictation, three difficulty levels and a split-screen duel mode.</p>
+        <div class="card-foot">
+          <span class="card-rating"><span class="star">★</span> 3.9 · 106 reviews</span>
+          <span class="card-install">Install <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a class="card" style="--card-accent:var(--pink)" href="https://play.google.com/store/apps/details?id=com.systodevs.hextris" target="_blank" rel="noopener">
+        <div class="card-top">
+          <div class="card-icon"><img src="https://play-lh.googleusercontent.com/1lSiJUkOJxQUprYKo1-cn-U-8gAI6KCLLD_5VvNQqxx0eOIpTI0JRREDDJDygA_lfqPfDVHWwlwHKoHCCixJetw=w120" alt="Hextris icon" loading="lazy"></div>
+          <div>
+            <div class="card-title">HEXTRIS Color Game</div>
+            <span class="card-cat">Arcade</span>
+          </div>
+        </div>
+        <p class="card-desc">Rotate the hexagon, match three colors before they escape — a fast, satisfying puzzle game.</p>
+        <div class="card-foot">
+          <span class="card-rating">com.systodevs.hextris</span>
+          <span class="card-install">Install <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a class="card" style="--card-accent:var(--violet)" href="https://play.google.com/store/apps/details?id=com.systodevs.quotesapp" target="_blank" rel="noopener">
+        <div class="card-top">
+          <div class="card-icon"><img src="https://play-lh.googleusercontent.com/T0Ru5j9nWY-JEaOy6kjgjqqZGRjNMRDUSn9dmSScbPrONuiiLZhdnJu88KXWLGBdk8x_6wVqjgaS9Plzfg0B=w120" alt="Quotes and Sayings icon" loading="lazy"></div>
+          <div>
+            <div class="card-title">Quotes and Sayings</div>
+            <span class="card-cat">Social</span>
+          </div>
+        </div>
+        <p class="card-desc">20,000+ quotes across 40 categories, fully offline — bookmark, copy or share your favourites.</p>
+        <div class="card-foot">
+          <span class="card-rating"><span class="star">★</span> 5.0 · 6 reviews</span>
+          <span class="card-install">Install <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a class="card" style="--card-accent:var(--amber)" href="https://play.google.com/store/apps/details?id=com.systodevs.textrepeater" target="_blank" rel="noopener">
+        <div class="card-top">
+          <div class="card-icon"><img src="https://play-lh.googleusercontent.com/bieiFY5VT82Op62E7Ez1NOKpnRdOWaL5bUOUQli9NfOVIhp2uDNrfl5LsslAyIk_yCp1deTv1paz_G3B9MeeYA=w120" alt="Text Repeater icon" loading="lazy"></div>
+          <div>
+            <div class="card-title">Text Repeater</div>
+            <span class="card-cat">Tools</span>
+          </div>
+        </div>
+        <p class="card-desc">Repeat text or emoji up to 10,000 times, generate random strings, blank text and ASCII art.</p>
+        <div class="card-foot">
+          <span class="card-rating"><span class="star">★</span> 4.8 · 16 reviews</span>
+          <span class="card-install">Install <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a class="card" style="--card-accent:var(--amber)" href="https://play.google.com/store/apps/details?id=com.systodevs.stylishtext" target="_blank" rel="noopener">
+        <div class="card-top">
+          <div class="card-icon"><img src="https://play-lh.googleusercontent.com/0rkDTYQw0sXKfOVMKUHm-jjwG_CbIj8sQGfYZ1Oc7d-nmcQDR8E0ikuPr9tVbzjfDLqpcMZYrgZHeaHYBPMdQOU=w120" alt="Stylish Text icon" loading="lazy"></div>
+          <div>
+            <div class="card-title">Stylish Text</div>
+            <span class="card-cat">Tools</span>
+          </div>
+        </div>
+        <p class="card-desc">Turn plain text into fancy Unicode fonts, big text and symbols — copy and paste anywhere.</p>
+        <div class="card-foot">
+          <span class="card-rating"><span class="star">★</span> 5.0 · 15 reviews</span>
+          <span class="card-install">Install <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand"><span class="brand-mark"><img src="logo.png" alt="Systo Devs icon" loading="lazy"></span> Systo Devs</div>
+        <p>An independent Android studio in Pakistan, building small apps that do one thing well. Life is too short for ordinary apps.</p>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="https://play.google.com/store/apps/dev?id=8543607612082086803" target="_blank" rel="noopener">All apps on Google Play</a>
+          <a href="#apps">Browse the toolbox</a>
+        </div>
+        <div class="foot-col">
+          <h4>Contact</h4>
+          <a href="mailto:systodevs@gmail.com">systodevs@gmail.com</a>
+          <a href="mailto:saqibrehan587@gmail.com">saqibrehan587@gmail.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> Systo Devs. All apps and trademarks belong to their respective owners.</span>
+      <span>Made with ❤️ in Pakistan.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
